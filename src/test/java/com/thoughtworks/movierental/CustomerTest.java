@@ -63,7 +63,7 @@ public class CustomerTest {
                 "You earned 5 frequent renter points", customer.statement());
     }
     @Test
-    public void test5IncludeUnavailablePricingCode() {
+    public void test6IncludeUnavailablePricingCode() {
         Customer customer = getCustomer("");
         customer.addRental(getRental(getMovie("", 20), 2));
         Assert.assertEquals("Rental Record for \n" +
@@ -73,7 +73,7 @@ public class CustomerTest {
     }
 
     @Test
-    public void test6WithMultipleRentalsAndAllPricingCodeFlowsIncludingUnavailablePriceCode_Test1ToTest5() {
+    public void test7WithMultipleRentalsAndAllPricingCodeFlowsIncludingUnavailablePriceCode_Test1ToTest6() {
         Customer customer = getCustomer("");
         customer.addRental(getRental(getMovie("",Movie.REGULAR),3));
         customer.addRental(getRental(getMovie("", Movie.NEW_RELEASE), 1));
