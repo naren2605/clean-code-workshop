@@ -22,29 +22,38 @@ public class Customer {
   public String statement() {
     double totalAmount = 0;
     int frequentRenterPoints = 0;
-    String result = "Rental Record for " + getName() + "\n";
+    String header = getHeader();
+    String body="";
     for (Rental each : rentals) {
       double thisAmount = 0;
       //determine amounts for each line
       thisAmount = thisAmount+ each.getRent();
-      // add frequent renter points
-      frequentRenterPoints++;
-      // add bonus for a two day new release rental
-      if ((each.getMovie().getPriceCode() == Movie.NEW_RELEASE)
-          &&
-          each.getDaysRented() > 1) frequentRenterPoints++;
-
+      frequentRenterPoints = frequentRenterPoints+each.getFrequentRenterPoints();
       //show figures for this rental
-      result += "\t" + each.getMovie().getTitle() + "\t" +
-          String.valueOf(thisAmount) + "\n";
+      body += getFormattedRentForDisplay(each, thisAmount);
       totalAmount += thisAmount;
     }
 
     //add footer lines result
-    result += "Amount owed is " + String.valueOf(totalAmount) + "\n";
-    result += "You earned " + String.valueOf(frequentRenterPoints)
-        + " frequent renter points";
+    String footer=getFooter(totalAmount, frequentRenterPoints);
+    String result = header+body+footer;
     return result;
+  }
+
+  private String getFormattedRentForDisplay(Rental each, double thisAmount) {
+    return "\t" + each.getMovie().getTitle() + "\t" +
+        String.valueOf(thisAmount) + "\n";
+  }
+
+  private String getFooter(double totalAmount, int frequentRenterPoints) {
+    String footer = "Amount owed is " + String.valueOf(totalAmount) + "\n";
+    footer += "You earned " + String.valueOf(frequentRenterPoints)
+        + " frequent renter points";
+    return footer;
+  }
+
+  private String getHeader() {
+    return "Rental Record for " + getName() + "\n";
   }
 
 }
