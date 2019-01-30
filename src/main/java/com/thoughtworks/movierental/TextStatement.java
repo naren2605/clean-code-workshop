@@ -2,10 +2,10 @@ package com.thoughtworks.movierental;
 
 import java.util.List;
 
-public class Statement {
+public class TextStatement {
     private final String customerTitle;
     private final List<Rental> rentals;
-    public Statement(List<Rental> rentals,String customerTitle){
+    public TextStatement(List<Rental> rentals, String customerTitle){
         this.customerTitle=customerTitle;
         this.rentals=rentals;
     }
@@ -29,22 +29,16 @@ public class Statement {
     }
 
 
-    protected final String getText(){
+    public  String getText(){
         return getHeader()+getBody()+getFooter();
     }
-    protected final int getFrequentRenterPoints() {
+    private int getFrequentRenterPoints() {
         return rentals.stream(). mapToInt(rental->rental.getFrequentRenterPoints()).sum();
     }
 
-    protected final double getTotalAmount() {
+    private  double getTotalAmount() {
         return rentals.stream().mapToDouble(rental->rental.getRent()).sum();
     }
 
-    protected final List<Rental> getRentals() {
-        return rentals;
-    }
 
-    protected final String getCustomerTitle() {
-        return customerTitle;
-    }
 }

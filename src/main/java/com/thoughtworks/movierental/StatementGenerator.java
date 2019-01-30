@@ -7,11 +7,11 @@ public class StatementGenerator {
     private static StatementGenerator statementGenerator;
     private StatementGenerator(){}
 
-    public Statement getTextStatement(String customerTitle, List<Rental> rentals) {
-        return new Statement(rentals, customerTitle);
+    public TextStatement getTextStatement(String customerTitle, List<Rental> rentals) {
+        return new TextStatement(rentals, customerTitle);
     }
 
-    public Statement getHtmlStatement(String customerTitle, List<Rental> rentals) {
+    public HtmlStatement getHtmlStatement(String customerTitle, List<Rental> rentals) {
         return new HtmlStatement(rentals, customerTitle);
     }
 
