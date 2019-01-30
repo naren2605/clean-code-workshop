@@ -4,15 +4,15 @@ import java.util.List;
 
 public class TextStatement {
     private final String customerTitle;
-    private final List<Rental> rentals;
-    public TextStatement(List<Rental> rentals, String customerTitle){
+    private final Rentals rentals;
+    public TextStatement(Rentals rentals, String customerTitle){
         this.customerTitle=customerTitle;
         this.rentals=rentals;
     }
 
     protected String getFooter() {
-        String footer = "Amount owed is " + getTotalAmount() + "\n";
-        footer += "You earned " + getFrequentRenterPoints()
+        String footer = "Amount owed is " + rentals.getTotalAmount() + "\n";
+        footer += "You earned " + rentals.getFrequentRenterPoints()
                 + " frequent renter points";
         return footer;
     }
@@ -22,8 +22,8 @@ public class TextStatement {
 
     protected String getBody() {
         String body="";
-        for (Rental each : rentals) {
-            body += "\t" + each.getMovie().getTitle() + "\t" +each.getRent()+ "\n";
+        for (Rental rental : rentals) {
+            body += "\t" + rental.getMovie().getTitle() + "\t" +rental.getRent()+ "\n";
         }
         return body;
     }
@@ -32,13 +32,7 @@ public class TextStatement {
     public  String getText(){
         return getHeader()+getBody()+getFooter();
     }
-    private int getFrequentRenterPoints() {
-        return rentals.stream(). mapToInt(rental->rental.getFrequentRenterPoints()).sum();
-    }
 
-    private  double getTotalAmount() {
-        return rentals.stream().mapToDouble(rental->rental.getRent()).sum();
-    }
 
 
 }

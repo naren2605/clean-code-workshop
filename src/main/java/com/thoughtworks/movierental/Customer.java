@@ -20,10 +20,14 @@ public class Customer {
   }
 
   public String statement() {
+    Rentals rentals=new Rentals();
+    rentals.addAll(this.rentals);
     return StatementGenerator.getInstance().getTextStatement(getName(),rentals).getText();
   }
 
   public String htmlStatement() {
+    Rentals rentals=new Rentals();
+    rentals.addAll(this.rentals);
     return StatementGenerator.getInstance().getHtmlStatement(getName(),rentals).getText();
   }
 
