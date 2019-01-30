@@ -20,29 +20,37 @@ public class Customer {
   }
 
   public String statement() {
-    double totalAmount = 0;
-    int frequentRenterPoints = 0;
+
     String header = getHeader();
     String body="";
-    for (Rental each : rentals) {
-      double thisAmount = 0;
-      //determine amounts for each line
-      thisAmount = thisAmount+ each.getRent();
-      frequentRenterPoints = frequentRenterPoints+each.getFrequentRenterPoints();
-      //show figures for this rental
-      body += getFormattedRentForDisplay(each, thisAmount);
-      totalAmount += thisAmount;
-    }
-
+    double totalAmount = getTotalAmount();
+    int frequentRenterPoints = getFrequentRenterPoints();
+    body = getBody();
     //add footer lines result
     String footer=getFooter(totalAmount, frequentRenterPoints);
     String result = header+body+footer;
     return result;
   }
 
-  private String getFormattedRentForDisplay(Rental each, double thisAmount) {
+  private String getBody() {
+    String body="";
+    for (Rental each : rentals) {
+      body += getFormattedRentForDisplay(each);
+    }
+    return body;
+  }
+
+  private int getFrequentRenterPoints() {
+    return rentals.stream(). mapToInt(rental->rental.getFrequentRenterPoints()).sum();
+  }
+
+  private double getTotalAmount() {
+    return rentals.stream().mapToDouble(rental->rental.getRent()).sum();
+  }
+
+  private String getFormattedRentForDisplay(Rental each) {
     return "\t" + each.getMovie().getTitle() + "\t" +
-        String.valueOf(thisAmount) + "\n";
+        String.valueOf(each.getRent()) + "\n";
   }
 
   private String getFooter(double totalAmount, int frequentRenterPoints) {
