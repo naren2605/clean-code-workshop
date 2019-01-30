@@ -26,7 +26,7 @@ public class HtmlStatement extends Statement {
 
     @Override
     protected String getHeader() {
-         return "Rental Record for <b>" + getCustomerTitle() + "</b></br>";
+         return "Rental Record for <b>" + getCustomerTitle() + "</b><br/>";
     }
 
 

@@ -90,6 +90,29 @@ public class CustomerTest {
                 "You earned 6 frequent renter points", customer.statement());
     }
 
+
+    @Test
+    public void test8GenerateHtmlReportWithMultipleRentalsAndAllPricingCodeFlowsIncludingUnavailablePriceCode_Test1ToTest6() {
+        Customer customer = getCustomer("test");
+        customer.addRental(getRental(getMovie("",Movie.REGULAR),3));
+        customer.addRental(getRental(getMovie("", Movie.NEW_RELEASE), 1));
+        customer.addRental(getRental(getMovie("", Movie.NEW_RELEASE), 2));
+        customer.addRental(getRental(getMovie("", Movie.CHILDRENS), 4));
+        customer.addRental(getRental(getMovie("", 20), 2));
+        Assert.assertEquals("Rental Record for <b>test</b><br/>" +
+                "\t\t3.5<br/>" +
+                "\t\t3.0<br/>" +
+                "\t\t6.0<br/>" +
+                "\t\t3.0<br/>" +
+                "\t\t0.0<br/>" +
+                "Amount owed is <b>15.5</b><br/>" +
+                "You earned <b>6</b> frequent renter points", customer.htmlStatement());
+    }
+
+
+
+
+
     private Customer getCustomer(String title) {
         return new Customer(title);
     }
